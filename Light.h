@@ -6,7 +6,9 @@ enum LightState { OFF, ON };
 class Light {
   boolean on;
   int pin;
+  int timer;
   void update();
+  void randomlyTurnOn();
   
   public:
     Light(int);

@@ -6,6 +6,7 @@ Light::Light(int pin) {
   pinMode(pin, OUTPUT);
   this->pin = pin;
   on = false;
+  timer = 0;
 }
 
 void Light::turn(LightState state) {
@@ -22,19 +23,32 @@ void Light::toggle() {
   update();
 }
 
-void Light::randomToggle() {
-  int value = random(0,2);
-  if (value == 0) {
-    turn(ON);    
-  } else {
-    turn(OFF);
-  }
-}
-
 void Light::update() {
   if (on == true) {
     digitalWrite(pin, HIGH);
   } else {
     digitalWrite(pin, LOW);
+  }
+}
+
+void Light::randomToggle() {
+  if (timer == 0) {
+    timer = random(10, 1000);
+  } else {
+    delay(100);
+    --timer;
+    randomlyTurnOn();
+  }
+}
+
+void Light::randomlyTurnOn() {
+  int value = random(0, 2) == 0;
+  switch (value) {
+    case 0:
+      turn(ON);
+    break;
+    case 1:
+      turn(OFF);
+    break;
   }
 }

@@ -20,8 +20,6 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  delay(random(50, 1000));
-
   for (int i = 0; i < SIZE; ++i) {
     lights[i].randomToggle();
   }
