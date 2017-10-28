@@ -1,25 +1,20 @@
-
 #include "Light.h"
 
-const int SIZE = 14;
+const int SIZE = 13;
 Light lights[] = { Light(0), Light(1), Light(2), Light(3), Light(4),
                    Light(5), Light(6), Light(7), Light(8), Light(9), 
-                   Light(10), Light(11), Light(12), Light(13)
+                   Light(10), Light(11), Light(12)
                  };
 
 void setup() {
-  // put your setup code here, to run once:
+  randomSeed(analogRead(0));
+
   for (int i = 0; i < SIZE; ++i) {
-    if (random(0, 2) == 0) {
-      lights[i].turn(ON);
-    } else {
-      lights[i].turn(OFF);
-    }
+    lights[i].randomlyTurnOn();
   }
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   for (int i = 0; i < SIZE; ++i) {
     lights[i].randomToggle();
   }

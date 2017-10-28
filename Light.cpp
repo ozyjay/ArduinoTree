@@ -1,12 +1,12 @@
 #include <arduino.h>
-
 #include "Light.h"
 
 Light::Light(int pin) {
   pinMode(pin, OUTPUT);
   this->pin = pin;
   on = false;
-  timer = 0;
+  countdown = 0;
+  delayAmount = random(1, 100);
 }
 
 void Light::turn(LightState state) {
@@ -15,16 +15,12 @@ void Light::turn(LightState state) {
 }
 
 void Light::toggle() {
-  if (on == true) {
-    on = false;
-  } else {
-    on = true;
-  }
+  on = !on;
   update();
 }
 
 void Light::update() {
-  if (on == true) {
+  if (on) {
     digitalWrite(pin, HIGH);
   } else {
     digitalWrite(pin, LOW);
@@ -32,23 +28,15 @@ void Light::update() {
 }
 
 void Light::randomToggle() {
-  if (timer == 0) {
-    timer = random(10, 1000);
+  if (countdown == 0) {
+    countdown = random(1, 500);
   } else {
-    delay(100);
-    --timer;
+    delay(delayAmount);
+    --countdown;
     randomlyTurnOn();
   }
 }
 
 void Light::randomlyTurnOn() {
-  int value = random(0, 2) == 0;
-  switch (value) {
-    case 0:
-      turn(ON);
-    break;
-    case 1:
-      turn(OFF);
-    break;
-  }
+  turn(random(0,2) == 0 ? ON : OFF);
 }
